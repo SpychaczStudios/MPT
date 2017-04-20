@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.lab.spych.mpt.dlaAndroida.NoweZadanie">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:hint="Tytuł"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tytulNowegoZadania"
+                android:fontFamily="sans-serif"
+                android:textSize="30sp"
+                android:textStyle="normal|bold"
+                android:singleLine="true"
+                android:selectAllOnFocus="true" />
+
+            <EditText
+                android:hint="opis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/opisNowegoZadania"
+                android:fontFamily="sans-serif"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TimePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/startNowegoZadania"
+                    android:timePickerMode="spinner"
+                    android:layout_weight="1"/>
+
+                <TimePicker
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/deadlineNowegoZadania"
+                    android:timePickerMode="spinner"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <Button
+                android:text="Dodaj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="dodajNoweZadanie" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
