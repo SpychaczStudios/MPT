@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
         String uri = preferencje.getString(Util.SHARED_PREFERENCES_LISTA_ZADAN, null); ///Tutaj wyciągam string uri z preferencji
         if(uri != (null)) zapelnijListe(Uri.parse(uri)); ///tutaj zapełniam listę pod warunkiem, że w sharedpreferences umieściłem wcześniej uri
 // TODO NOW NOW NOW Tytuł pliku w MainActivity
-//        TODO NOW NOW NOW NOW Dodanie listy bagów w menu kropkowym (via Shered Preferences)
-//        TODO NOW NOW NOW NOW NEXT Czytanie z Shared Preferences (bugreportów)
 // TODO NEXT Dodatkowy przycisk na toolbarze w ActivityNoweZadanie
 
     }
