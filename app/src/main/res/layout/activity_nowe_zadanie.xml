@@ -11,7 +11,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -61,7 +63,7 @@
                 android:text="Dodaj"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="dodajNoweZadanie" />
+                android:onClick="onClick" />
 
 
         </LinearLayout>

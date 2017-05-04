@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,9 +33,11 @@ import com.lab.spych.mpt.uniwersalne.lista_zadan.Zadanie;
 
 import java.io.IOException;
 
+
 /**
  * Activity wczytuje listę z pliku (z Obiektu klasy PlikListyZadanAndroid). Jedyne co robi to tworzy z wybranego pliku ListView, dlatego Nie trzeba się martwić o onSavedInstanceState.
- */
+ *
+*/
 public class MainActivity extends AppCompatActivity {
     private static final int WRITE_REQUEST_CODE = 43;
     private static final int READ_REQUEST_CODE = 42;
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private ListaZadan listaZadan;
     private AdapterListyZadan adapter;
     private TextView tytulListyZadan;
+    private Uri uriDoListyZadan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +71,15 @@ public class MainActivity extends AppCompatActivity {
         tytulListyZadan = (TextView) findViewById(R.id.tytulListy);
         lista = (ListView) findViewById(R.id.lista);
         preferencje = getSharedPreferences(Util.SHARED_PREFERENCES_PLIK, MODE_PRIVATE);
-        String uri = preferencje.getString(Util.SHARED_PREFERENCES_LISTA_ZADAN, null); ///Tutaj wyciągam string uri z preferencji
-        if(uri != (null)) zapelnijListe(Uri.parse(uri)); ///tutaj zapełniam listę pod warunkiem, że w sharedpreferences umieściłem wcześniej uri
-// TODO NOW NOW NOW Tytuł pliku w MainActivity
-//        TODO NOW NOW NOW NOW Dodanie listy bagów w menu kropkowym (via Shered Preferences)
-//        TODO NOW NOW NOW NOW NEXT Czytanie z Shared Preferences (bugreportów)
-// TODO NEXT Dodatkowy przycisk na toolbarze w ActivityNoweZadanie
+    }
 
+    public void onResume(){
+        super.onResume();
+        String uri = preferencje.getString(Util.SHARED_PREFERENCES_LISTA_ZADAN, null); ///Tutaj wyciągam string uri z preferencji
+        if(uri != (null)) {
+            uriDoListyZadan = Uri.parse(uri);
+            zapelnijListe(uriDoListyZadan); ///tutaj zapełniam listę pod warunkiem, że w sharedpreferences umieściłem wcześniej uri
+        }
     }
 
     @Override
@@ -111,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SharedPreferences.Editor e = preferencje.edit();
-                    e.putString(Util.SHARED_PREFERENCES_BUGREPORTING, preferencje.getString(Util.SHARED_PREFERENCES_BUGREPORTING, null) + tV.getText().toString() + Util.SEPARATOR);
+                    e.putString(Util.SHARED_PREFERENCES_BUGREPORTING, tV.getText().toString() + Util.SEPARATOR);
                     e.apply();
                 }
             });
@@ -168,10 +174,16 @@ public class MainActivity extends AppCompatActivity {
             plikListyZadanAndroid = new PlikListyZadanAndroid(uri, this);
             ///Teraz tworzymy liste zadan jako obiekt
             listaZadan = new ListaZadan(plikListyZadanAndroid);
-            if(listaZadan.getTytul()==null) listaZadan.setTytul(Util.tytulNowejListyRyzykownaOperacjaPrzyUzyciuZmiennejGlobalnej);
+            if(listaZadan.getTytul()==null) listaZadan.setTytul(preferencje.getString(Util.SHARED_PREFERENCES_TYTUL_LISTY, Util.PLACEHOLDER_TYTUL));
             ///Teraz zapełniamy listę
             adapter = new AdapterListyZadan(getBaseContext(), R.layout.zadanie, listaZadan);
             lista.setAdapter(adapter);
+            lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ((Zadanie)parent.getAdapter().getItem(position)).edytujAndroid(view.getContext(), uriDoListyZadan, position);
+                }
+            });
             tytulListyZadan.setText(listaZadan.getTytul());
         } catch (SecurityException e){
             /// TODO ULEPSZENIE Spodziewam się tutaj błędu bezpieczeństwa. Pojawia się ona za każdym razem gdy resetuję urządzenie. Jego naprawa wymaga pracy i jest skomplikowana - chyba nie warto. Na razie po prostu zostawie jak jest: obecnie po restarcie zwyczajnie trzeba na nowo zaladowac plik
@@ -197,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                     i.addCategory(Intent.CATEGORY_OPENABLE);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_TITLE, nazwaPliku);
-                    Util.tytulNowejListyRyzykownaOperacjaPrzyUzyciuZmiennejGlobalnej = nazwaPliku;
+                    preferencje.edit().putString(Util.SHARED_PREFERENCES_TYTUL_LISTY, nazwaPliku).apply();
                     startActivityForResult(i, WRITE_REQUEST_CODE);
                 }
             }

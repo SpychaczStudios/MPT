@@ -49,6 +49,7 @@ public class ListaZadan extends ArrayList<Zadanie> {
     ///GETTERY I SETTERY
 
     public String getTytul() {
+        if(tytul==null) return Util.PLACEHOLDER_TYTUL;
         return tytul;
     }
 
@@ -62,6 +63,12 @@ public class ListaZadan extends ArrayList<Zadanie> {
         this.add(z);
         this.sortujCzasRozpoczecia();
     }
+
+    public void usunIPosortujWgCzasuRozpoczecia(int pozycja){
+        this.remove(pozycja);
+        this.sortujCzasRozpoczecia();
+    }
+
 
     /**
      * Sortuje listę według czasu rozpoczęcia poszczególnych zadań. POrządek chronologiczny.

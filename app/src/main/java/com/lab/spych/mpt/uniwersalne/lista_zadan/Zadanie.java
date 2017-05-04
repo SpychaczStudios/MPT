@@ -1,7 +1,11 @@
 package com.lab.spych.mpt.uniwersalne.lista_zadan;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 
+import com.lab.spych.mpt.dlaAndroida.ActivityEdytujZadanie;
 import com.lab.spych.mpt.uniwersalne.Util;
 import com.lab.spych.mpt.uniwersalne.alarmy.Czas;
 
@@ -14,6 +18,8 @@ import java.util.Scanner;
  */
 
 public class Zadanie implements Serializable {
+    public static final String KLUCZ_DO_POZYCJI_INTENT = "Klucz pozycji intent";
+    public static String KLUCZ_INTENT = "Klucz intent do przesyłania";
     private String tytul;
     private Czas start;
     private Czas deadline;
@@ -71,9 +77,21 @@ public class Zadanie implements Serializable {
     /**
      * Przesuwa w czasie start i deadline zadania o równą ilość minut i/lub godzin i/lub dób
      */
-    public void opoznij(int minuty, int godziny, int doby){
+    private void opoznij(int minuty, int godziny, int doby){
         getStart().zmienCzas(minuty, godziny, doby);
         getDeadline().zmienCzas(minuty, godziny, doby);
+    }
+
+    /**
+     * Troszczy się o całą edycję danego wydarzenia. (dostarcza również UI dla Androida)
+     * @param applicationContext
+     */
+    public void edytujAndroid(Context applicationContext, Uri uriListyZadan, int pozycja){
+        Intent i = new Intent(applicationContext, ActivityEdytujZadanie.class);
+        i.putExtra(KLUCZ_INTENT, this);
+        i.putExtra(KLUCZ_DO_POZYCJI_INTENT, pozycja);
+        i.setData(uriListyZadan);
+        applicationContext.startActivity(i);
     }
 
     ///GETTERY I SETTERY

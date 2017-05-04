@@ -22,15 +22,6 @@ import java.nio.charset.StandardCharsets;
 public class Util {
 
     /**
-     * UWAGA TA ZMIENNA STANOWI CZESC NIEBEZPIECZNEJ OPERACJI:
-     * Z okna dialogowego wysyłam tekst do tej zmiennej globalnej, jest to mało wążny element aplikacji i postaram się nim
-     * zbadać czy zmienne globalne faktycznie są niebezpieczne. (równie dobrze mógłbym do czegoś takiego użyćSharedPreferences, albo wykombinować to jeszcze jakoś inaczej, ale chcę sprawdzić jak się uda to ze zmiennymi globalnymi)
-     * BTW Jeden z inżynierów Google'a zdawał się polecać tą sztuczkę, pytanie czy może ona być stosowana często i do znaczących operacji? W sumie działanie tego mechanizmu nie powinno zależeć od
-     * telefonu, czy nawet systemu android, jedynie od Javy, zwłaszcza od Garbage Collection i tego typu mechanizmów. TODO IMPORTANT ZAJĄ SIĘ TYM EKSPERYMENTEM
-     */
-    public  static String tytulNowejListyRyzykownaOperacjaPrzyUzyciuZmiennejGlobalnej;
-
-    /**
      * pod tym kluczem w SharedPreferences zapisywane są uwagi użytkonika co do aplikacji jako String w formacie: <br/>
      * TekstPierwszejUwagi{@value Util#SEPARATOR}TekstDrugiejUwagi{@value Util#SEPARATOR}
      */
@@ -39,6 +30,9 @@ public class Util {
     public static final String SHARED_PREFERENCES_PLIK = "PlikSharedPreferences";
 
     public static final String SHARED_PREFERENCES_LISTA_ZADAN = "PlikListyZadan";
+
+    public static final String SHARED_PREFERENCES_TYTUL_LISTY = "PlikListyZadan";
+
     /**
      * Separator uzywany w pliku Listy Zadan.
      */

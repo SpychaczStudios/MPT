@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 /**
  * Klase tą nalezy rozszerzyć w zalezności od używanego systemu i sposobu pozyskiwania pliku.
- * Wszystkie klasy dziedziczace po tej, mają pozwolić mi uzyskać niezawodny dostęp do pliku, nadpisywac, oraz czytac, a także TODO tworzyć nowy plik w razie, jeśli stary nie jest dostępny.
+ * Wszystkie klasy dziedziczace po tej, mają pozwolić mi uzyskać niezawodny dostęp do pliku, nadpisywac, oraz czytac, a także
  * Ta klasa troszczy się o tępe zapisywanie obiektu Listy Zadań w pliku tekstowym
  * Created by spych on 2017-04-14.
  */

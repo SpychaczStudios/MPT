@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".dlaAndroida.NoweZadanie" />
+        <activity android:name=".dlaAndroida.ActivityEdytujZadanie"></activity>
     </application>
 
 </manifest>

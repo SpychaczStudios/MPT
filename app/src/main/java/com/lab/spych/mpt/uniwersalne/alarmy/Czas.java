@@ -69,7 +69,7 @@ public class Czas implements Serializable, Comparable<Czas> {
      * Przesunięcie czasu poza granicę jednej doby zmienia parametr doby
      * @param minuty minuty o które nalezy przesunąć zegar - ujemne przesuwają zegar do tyłu (jeśli |x| > 59, egar zostaje przesunięty o odpowiednią ilość godzin)
      * @param godziny godziny o które należy przesunąć zegar - może (i często będzie) równe 0, ujemne wartości przesuwają zegar do tyłu
-     * @param doba doby o które należy przesunąć czas dnia
+     * @param doby doby o które należy przesunąć czas dnia
      */
     public void zmienCzas(int minuty, int godziny, int doby){
         setDoba(getDoba()+doby);
@@ -85,7 +85,7 @@ public class Czas implements Serializable, Comparable<Czas> {
      *  @see Czas#doba
      */
     public String wezFormeOpisowa(){
-        String ret = godzina + ":" + minuta;
+        String ret = godzina + ":" + (minuta < 10 ? "0" + minuta : minuta); ///dodaje zero przed cyfrą minty, jeśli minuta < 10
         if (doba<-1) return ret + " " + -1*doba + " dni temu";
         else if (doba==-1) return ret + "wczoraj";
         if(doba==0) return ret;
